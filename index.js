@@ -60,6 +60,50 @@ app.get(`/products/:id`,async(req,res)=>{
     const result = await productCollection.findOne(query);
     res.send(result);
 })
+// Update
+// app.put('/products/:id',async(req,res)=>{
+//     const id=req.params.id;
+//     const filter={_id:new ObjectId(id)}
+//     const options={upset:true};
+//     const updateProduct=req.body;
+//      const products={
+//         $set:{
+        //    name:updateProduct.name,
+        //    brandName:updateProduct.brandName,
+        //    type:updateProduct.type,
+        //    price:updateProduct.price,
+        //    rating:updateProduct.rating,
+        //    photo:updateProduct.photo
+//         }
+//     }
+//     const result=await productCollection.updateOne(filter,options,products)
+//     res.send(result);
+// })
+
+app.put("/products/:id", async (req, res) => {
+    const id = req.params.id;
+    const updatedProduct= req.body;
+    console.log("id", id, updatedProduct);
+    const filter = { _id: new ObjectId(id) };
+    const options = { upsert: true };
+    const products = {
+      $set: {
+        name:updatedProduct.name,
+        brandName:updatedProduct.brandName,
+        type:updatedProduct.type,
+        price:updatedProduct.price,
+        rating:updatedProduct.rating,
+        photo:updatedProduct.photo
+      },
+    };
+    const result = await productCollection.updateOne(
+      filter,
+      products,
+      options
+    );
+    res.send(result);
+  });
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
