@@ -1,7 +1,7 @@
 const express = require('express');
 const cors=require("cors");
 require('dotenv').config();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express();
 
 // MiddleWare
@@ -32,6 +32,7 @@ const productCollection=client.db("insertDB").collection("product")
 
 app.post('/products',async(req,res)=>{
     const product=req.body;
+    console.log(product)
     const result=await productCollection.insertOne(product);
     console.log(result);
     res.send(result);
@@ -42,6 +43,24 @@ app.get("/products", async (req, res) => {
     const result = await curser.toArray();
     res.send(result);
   });
+//   Delete
+// Data delete from database
+app.delete("/products/:id",async(req,res)=>{
+    const id=req.params.id;
+    const query={_id: new ObjectId(id)};
+    console.log(query);
+    const result=await productCollection.deleteOne(query);
+    res.send(result);
+
+});
+app.get(`/products/:id`,async(req,res)=>{
+    const id=req.params.id;
+    const query={_id: new ObjectId(id)};
+    console.log(query);
+    const result = await productCollection.findOne(query);
+    res.send(result);
+})
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
