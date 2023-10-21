@@ -28,7 +28,7 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-const productCollection=client.db("insertDB").collection("product")
+const productCollection=client.db("insertDB").collection("product");
 
 app.post('/products',async(req,res)=>{
     const product=req.body;
@@ -61,24 +61,6 @@ app.get(`/products/:id`,async(req,res)=>{
     res.send(result);
 })
 // Update
-// app.put('/products/:id',async(req,res)=>{
-//     const id=req.params.id;
-//     const filter={_id:new ObjectId(id)}
-//     const options={upset:true};
-//     const updateProduct=req.body;
-//      const products={
-//         $set:{
-        //    name:updateProduct.name,
-        //    brandName:updateProduct.brandName,
-        //    type:updateProduct.type,
-        //    price:updateProduct.price,
-        //    rating:updateProduct.rating,
-        //    photo:updateProduct.photo
-//         }
-//     }
-//     const result=await productCollection.updateOne(filter,options,products)
-//     res.send(result);
-// })
 
 app.put("/products/:id", async (req, res) => {
     const id = req.params.id;
