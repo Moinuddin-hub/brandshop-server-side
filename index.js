@@ -15,7 +15,7 @@ const port= process.env.port || 5000;
 console.log(process.env.BD_USER);
 const uri = "mongodb+srv://moincse022:PcWJwAzlGA3RHYql@cluster0.ggdiyfe.mongodb.net/?retryWrites=true&w=majority";
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -26,7 +26,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
+    
     await client.connect();
 const productCollection=client.db("insertDB").collection("product");
 
@@ -91,7 +91,7 @@ app.put("/products/:id", async (req, res) => {
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
-    // Ensures that the client will close when you finish/error
+  
     // await client.close();
   }
 }
